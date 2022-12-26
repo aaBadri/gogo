@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+type Shape interface {
+	area() float64
+}
+
 func distance(x1, y1, x2, y2 float64) float64 {
 	a := x2 - x1
 	b := y2 - y1
@@ -39,6 +43,26 @@ func (r *Rectangle) area() float64 {
 	return l * w
 }
 
+func totalArea(shapes ...Shape) float64 {
+	var area float64
+	for _, shape := range shapes {
+		area += shape.area()
+	}
+	return area
+}
+
+type MultiShape struct {
+	shapes []Shape
+}
+
+func (m *MultiShape) area() float64 {
+	var area float64
+	for _, s := range m.shapes {
+		area += s.area()
+	}
+	return area
+}
+
 func main() {
 	//var c Circle
 	//c := new(Circle)
@@ -48,4 +72,13 @@ func main() {
 	r := Rectangle{0, 0, 10, 10}
 	fmt.Println("Rectangle:", r.area())
 
+	fmt.Println("totalArea:", totalArea(&c, &r))
+
+	multiShape := MultiShape{
+		shapes: []Shape{
+			&Circle{2, 3, 1},
+			&Rectangle{0, 0, 10, 10},
+		},
+	}
+	fmt.Println("MultiShape:", multiShape.area())
 }
