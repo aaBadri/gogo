@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	myMath "gogo/math"
+	myMath "gogo/book_introducing_go/math"
 )
 
 func main() {
